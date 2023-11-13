@@ -1,0 +1,25 @@
+name: Synchronisation Pascal
+on:
+  push:
+    branches: [BranchePascal]
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to hub
+        env:
+          HF_TOKEN_PASCAL: ${{secrets.HF_TOKEN_PASCAL}}
+        run: |
+          cd Code/Gradio
+          git init
+          git config --global user.name "PascalZhan"
+          git config --global user.email "pascal.zhan.pro@gmail.com"
+          git config --global init.defaultBranch main
+          git branch -m main
+          git add .
+          git commit -m "Synchronisation Pascal"
+          git push --force "https://PascalZhan:$HF_TOKEN_PASCAL@huggingface.co/spaces/PascalZhan/SAE-GPT2-PASCAL" main

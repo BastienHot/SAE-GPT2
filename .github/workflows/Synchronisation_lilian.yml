@@ -1,0 +1,25 @@
+name: Synchronisation Lilian
+on:
+  push:
+    branches: [BrancheLilian]
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to hub
+        env:
+          HF_TOKEN_LILIAN: ${{secrets.HF_TOKEN_LILIAN}}
+        run: |
+          cd Code/Gradio
+          git init
+          git config --global user.name "Solialiranes"
+          git config --global user.email "solialiranes@gmail.com"
+          git config --global init.defaultBranch main
+          git branch -m main
+          git add .
+          git commit -m "Synchronisation Lilian"
+          git push --force "https://Solialiranes:$HF_TOKEN_LILIAN@huggingface.co/spaces/Solialiranes/SAE-GPT2-LILIAN" main

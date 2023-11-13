@@ -1,0 +1,25 @@
+name: Synchronisation Tamij
+on:
+  push:
+    branches: [BrancheTamij]
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to hub
+        env:
+          HF_TOKEN_TAMIJ: ${{secrets.HF_TOKEN_TAMIJ}}
+        run: |
+          cd Code/Gradio
+          git init
+          git config --global user.name "Tamij"
+          git config --global user.email "tamijsara@gmail.com"
+          git config --global init.defaultBranch main
+          git branch -m main
+          git add .
+          git commit -m "Synchronisation Tamij"
+          git push --force "https://Tamij:$HF_TOKEN_TAMIJ@huggingface.co/spaces/Tamij/SAE-GPT2-TAMIJ" main

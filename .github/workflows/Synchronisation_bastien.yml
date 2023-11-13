@@ -1,0 +1,25 @@
+name: Synchronisation Bastien
+on:
+  push:
+    branches: [BrancheBastien]
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push to hub
+        env:
+          HF_TOKEN_BASTIEN: ${{secrets.HF_TOKEN_BASTIEN}}
+        run: |
+          cd Code/Gradio
+          git init
+          git config --global user.name "BastienHot"
+          git config --global user.email "hotteletbastien@gmail.com"
+          git config --global init.defaultBranch main
+          git branch -m main
+          git add .
+          git commit -m "Synchronisation Bastien"
+          git push --force "https://BastienHot:$HF_TOKEN_BASTIEN@huggingface.co/spaces/BastienHot/SAE-GPT2-BASTIEN" main
