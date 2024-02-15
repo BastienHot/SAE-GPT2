@@ -1,1 +1,3 @@
 gradio
+keras_nlp
+typing-extensions
