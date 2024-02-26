@@ -33,6 +33,7 @@ Ce projet a pour objectif de développer un chatbot conversationnel intelligent 
 5. Fine-tunning du modèle GPT 2 disponible sur Tensorflow (rendu collectif, 19 Janvier 2023) (Compétence 2)
 
 6. Prototypage de l’application avec Gradio (rendu collectif, 19 Janvier 2023). (Compétence 1)
+https://www.figma.com/file/NP8DamV3PV2k38mucGhl0Q/chatbot_test_1?type=design&node-id=0-1&mode=design&t=Gke5TVV5dYdMvLqJ-0
 
 7. Rapport sur la comparaison entre le modèle générique et le modèle spécialisé (rendu collectif ;16 Février 2024) (Compétence 1 et 2 et 3)
 
