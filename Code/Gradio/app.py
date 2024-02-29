@@ -69,12 +69,9 @@ def clean_answer_text(text: str) -> str:
 
     return response_text
     
-# Initialize an empty DataFrame to keep track of question-answer history
-history_df = pd.DataFrame(columns=["Question", "Réponse"])
 
 # Define a Gradio interface
-def chat_interface(question):
-    global history_df
+def chat_interface(question, history_df):
     response = generate_responses(question)
     # Insert the new question and response at the beginning of the DataFrame
     history_df = pd.concat([pd.DataFrame({"Question": [question], "Réponse": [response]}), history_df], ignore_index=True)
@@ -90,9 +87,11 @@ with gr.Blocks() as demo:
         question = gr.Textbox(label="Votre Question", placeholder="Saisissez ici...")
         submit_btn = gr.Button("Envoyer")
     response = gr.Textbox(label="Réponse", interactive=False)
+    
+    # Initialize an empty DataFrame to keep track of question-answer history
     history_display = gr.Dataframe(headers=["Question", "Réponse"], values=[])
 
-    submit_btn.click(fn=chat_interface, inputs=question, outputs=[response, history_display])
+    submit_btn.click(fn=chat_interface, inputs=[question, history_display], outputs=[response, history_display])
 
 if __name__ == "__main__":
     demo.launch()
