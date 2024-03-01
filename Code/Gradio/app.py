@@ -89,7 +89,7 @@ with gr.Blocks() as demo:
     response = gr.Textbox(label="Réponse", interactive=False)
     
     # Initialize an empty DataFrame to keep track of question-answer history
-    history_display = gr.Dataframe(headers=["Question", "Réponse"], values=[])
+    history_display = gr.Dataframe(headers=["Question", "Réponse"], values=[], interactive=False)
 
     submit_btn.click(fn=chat_interface, inputs=[question, history_display], outputs=[response, history_display])
 
