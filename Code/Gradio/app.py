@@ -1,4 +1,4 @@
-# Author: Bastien
+# Author: Bastien & Pascal
 # Date: 2/25/2024
 # Project: SAE-GPT2 | BUT 3 Informatique - Semester 5
 
@@ -17,12 +17,14 @@ import keras_nlp
 import pandas as pd
 import gradio as gr
 from googletrans import Translator
+from importHuggingFaceHubModel import from_pretrained_keras
 
 # Set Keras Backend to Tensorflow
 os.environ["KERAS_BACKEND"] = "tensorflow"
 
 # Load the fine-tuned model
-model = keras.models.load_model("LoRA_Model_V2.keras")
+#model = keras.models.load_model("LoRA_Model_V2.keras")
+model = from_pretrained_keras('DracolIA/GPT-2-LoRA-HealthCare')
 
 translator = Translator() # Create Translator Instance
 
