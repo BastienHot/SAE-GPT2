@@ -31,43 +31,32 @@ translator = Translator() # Create Translator Instance
 # Function to generate responses from the model
 def generate_responses(question):
     language = translator.detect(question).lang.upper() # Verify the language of the prompt
-
     if language != "EN":
         question = translator.translate(question, src=language, dest="en").text # Translation of user text to english for the model
-    
-    prompt = f"Patient: \"{question}\"\nDoctor:"
+        
+    prompt = f"[QUESTION] {question} [ANSWER]"
     # Generate the answer from the model and then clean and extract the real model's response from the prompt engineered string
     output = clean_answer_text(model.generate(prompt, max_length=1024))
-
+    
+    # Generate the answer from the model and then clean and extract the real model's response from the prompt engineered string
     if language != "EN":
         output = Translator().translate(output, src="en", dest=language).text # Translation of model's text to user's language
-
+    
     return output
-
 
 # Function clean the output of the model from the prompt engineering done in the "generate_responses" function
 def clean_answer_text(text: str) -> str:
     # Define the start marker for the model's response
-    doctor_response_start = text.find("Doctor:") + len("Doctor:")
+    response_start = text.find("[ANSWER]") + len("[ANSWER]")
 
     # Extract everything after "Doctor:"
-    response_text = text[doctor_response_start:].strip()
-
-    # If there's a follow-up "Patient:" in the response, cut the response there
-    follow_up_index = response_text.find("\nPatient:")
-    if follow_up_index != -1:
-        response_text = response_text[:follow_up_index]
-
-    # If there's no follow-up "Patient:", cut the response to the last dot (.)
-    else:
-        last_dot_index = response_text.rfind(".")
-        if last_dot_index != -1:
-            response_text = response_text[:last_dot_index + 1]
+    response_text = text[response_start:].strip()
+    last_dot_index = response_text.rfind(".")
+    if last_dot_index != -1:
+      response_text = response_text[:last_dot_index + 1]
 
     # Additional cleaning if necessary (e.g., removing leading/trailing spaces or new lines)
     response_text = response_text.strip()
-
-    response_text = response_text.replace("Doctor: ","")
 
     return response_text
     
